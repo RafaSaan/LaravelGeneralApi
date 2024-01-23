@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,14 +29,26 @@ class ProductsController extends Controller
             ], 500 );
         }
     }
+
+    private function setStatusId($product) {
+        $statusId = ProductStatus::where('code', 'out_of_stock')->first()->id;
+        if ($product['quantity'] > 0) {
+            return $statusId = ProductStatus::where('code', 'out_of_stock')->first()->id;
+        }
+        return $statusId;
+    }
+
     public function store(Request $request)
     {
         try {
             DB::beginTransaction();
-            $products = new Product();
+            $product = new Product();
             $data = $request->all();
-            $products->fill($data);
-            $products->save();
+            $statusId = $this->setStatusId($data);
+            $data['status_id'] = $statusId;
+            // ddf($data['quantity']);
+            $product->fill($data);
+            $product->save();
             DB::commit();
             return response()->json( [
                 'success' => true

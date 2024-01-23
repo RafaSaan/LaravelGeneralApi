@@ -15,14 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->integer('quantity')->unsigned();
             $table->decimal('amount');
-            $table->decimal('amount_wholesale');
+            $table->decimal('amount_wholesale')->nullable();
             $table->boolean('has_wholesale')->default(false);
-            $table->string('img_url');
+            $table->string('img_url')->nullable();
             $table->integer('status_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('status_id')->references('id')->on('products_status');
+            $table->foreign('status_id')->references('id')->on('product_statuses');
         });
     }
 

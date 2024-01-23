@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TestsController;
 
 /*
@@ -22,3 +23,4 @@ use App\Http\Controllers\TestsController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [TestsController::class, 'getSessionInfo']);
+Route::post('createProduct', [ProductsController::class, 'store']);

@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             UserProfilesSeeder::class,
             SuperAdminUserSeeder::class,
             ModulesSeeder::class,
-            PermissionsSeeder::class
+            PermissionsSeeder::class,
+            ProductStatusSeeder::class
         ]);
     }
 }
