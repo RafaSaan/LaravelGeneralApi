@@ -18,4 +18,14 @@ class Product extends Model
         'img_url',
         'status_id'
     ];
+
+    public function getStatusNameAttribute()
+    {
+        return $this->status->name ?? '';
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(ProductStatus::class, 'status_id', 'id');
+    }
 }

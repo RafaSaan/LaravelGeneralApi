@@ -15,6 +15,8 @@ class ProductsController extends Controller
             $rowsPerPage = $request->rowsPerPage ? (int) $request->rowsPerPage : 5;
             $page = $request->page ? (int) $request->page - 1 : 0;
             $products = Product::offset($page * $rowsPerPage)
+            ->join('product_statuses as status','products.status_id', '=', 'status.id')
+            ->select('products.*', 'status.code as status')
             ->limit($rowsPerPage)
             ->get();
             return response()->json( [
@@ -46,7 +48,6 @@ class ProductsController extends Controller
             $data = $request->all();
             $statusId = $this->setStatusId($data);
             $data['status_id'] = $statusId;
-            // ddf($data['quantity']);
             $product->fill($data);
             $product->save();
             DB::commit();

@@ -24,3 +24,4 @@ use App\Http\Controllers\TestsController;
 Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [TestsController::class, 'getSessionInfo']);
 Route::post('createProduct', [ProductsController::class, 'store']);
+Route::get('getProducts', [ProductsController::class, 'index']);
