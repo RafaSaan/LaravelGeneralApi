@@ -17,13 +17,13 @@ return new class extends Migration
             $table->string('description');
             $table->integer('quantity')->unsigned();
             $table->decimal('amount');
-            $table->decimal('amount_wholesale')->nullable();
-            $table->boolean('has_wholesale')->default(false);
-            $table->string('img_url')->nullable();
-            $table->integer('status_id')->unsigned();
+            $table->decimal('amountWholesale')->nullable();
+            $table->boolean('hasWholesale')->default(false);
+            $table->string('imgUrl')->nullable();
+            $table->integer('statusId')->unsigned();
             $table->timestamps();
 
-            $table->foreign('status_id')->references('id')->on('product_statuses');
+            $table->foreign('statusId')->references('id')->on('product_statuses');
         });
     }
 

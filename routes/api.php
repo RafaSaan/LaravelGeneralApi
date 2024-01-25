@@ -25,3 +25,4 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [TestsController::class, 'getSessionInfo']);
 Route::post('createProduct', [ProductsController::class, 'store']);
 Route::get('getProducts', [ProductsController::class, 'index']);
+Route::post('updateProduct', [ProductsController::class, 'update']);
