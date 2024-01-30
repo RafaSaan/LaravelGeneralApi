@@ -25,4 +25,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [TestsController::class, 'getSessionInfo']);
 Route::post('createProduct', [ProductsController::class, 'store']);
 Route::get('getProducts', [ProductsController::class, 'index']);
-Route::post('updateProduct', [ProductsController::class, 'update']);
+Route::put('updateProduct', [ProductsController::class, 'update']);
+Route::patch('enableOrDisableWholesaleProduct/{id}', [ProductsController::class, 'enableOrDisableWholesaleProduct']);
+Route::delete('deleteProduct/{id}', [ProductsController::class, 'deleteProduct']);

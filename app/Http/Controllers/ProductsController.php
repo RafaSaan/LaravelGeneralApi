@@ -35,7 +35,7 @@ class ProductsController extends Controller
 
     private function setStatusId($product) {
         $statusId = ProductStatus::where('code', 'out_of_stock')->first()->id;
-        if ($product['quantity'] > 0 && $product['quantity'] < 10) {
+        if ($product['quantity'] > 0 && $product['quantity'] <= 10) {
             return $statusId = ProductStatus::where('code', 'low_stock')->first()->id;
         }
         if ($product['quantity'] > 10) {
@@ -60,6 +60,7 @@ class ProductsController extends Controller
             ], 200 );
         }
         catch ( \Exception $e ) {
+            DB::rollBack();
             return response()->json( [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -82,6 +83,45 @@ class ProductsController extends Controller
             ], 200 );
         }
         catch ( \Exception $e ) {
+            DB::rollBack();
+            return response()->json( [
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500 );
+        }
+    }
+    public function enableOrDisableWholesaleProduct($id,Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $product = Product::where('id', $id)->first();
+            $product->hasWholesale = $request->hasWholesale;
+            $product->save();
+            DB::commit();
+            return response()->json( [
+                'success' => true
+            ], 200 );
+        }
+        catch ( \Exception $e ) {
+            DB::rollBack();
+            return response()->json( [
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500 );
+        }
+    }
+    public function deleteProduct($id)
+    {
+        try {
+            DB::beginTransaction();
+            Product::where('id', $id)->delete();
+            DB::commit();
+            return response()->json( [
+                'success' => true
+            ], 200 );
+        }
+        catch ( \Exception $e ) {
+            DB::rollBack();
             return response()->json( [
                 'success' => false,
                 'message' => $e->getMessage()
